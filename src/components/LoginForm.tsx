@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import {
   Alert,
   Button,
@@ -8,15 +8,14 @@ import {
   Input,
   Label,
 } from 'reactstrap';
-import { login } from './api/apiService';
+import { login } from '../api/apiService';
 import { useHistory } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 
-const LoginForm = () => {
+const LoginForm = (): ReactElement => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [cookies, setCookie, removeCookie] = useCookies(['user_token']);
 
   let history = useHistory();
 
@@ -25,8 +24,8 @@ const LoginForm = () => {
     login(username, password)
       .then((response) => {
         if (response.status === 200) {
+          Cookies.set('user_token', response.data.token);
           history.push('/dashboard');
-          setCookie('user_token', response.data.token);
         } else {
           alert('Failed!');
         }
