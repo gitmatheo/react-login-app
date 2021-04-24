@@ -3,15 +3,19 @@ import Cookies from 'js-cookie';
 import { Token } from '../models/Token';
 import { User } from '../models/User';
 
-export function login(
+export const login = (
   username: string,
   password: string
-): Promise<AxiosResponse<Token>> {
+): Promise<AxiosResponse<Token>> => {
   return axios.post(`${process.env.REACT_APP_BASE_URL}/login`, {
     username,
     password,
   });
-}
+};
+
+export const logout = (): void => {
+  Cookies.remove('user_token');
+};
 
 export const getUser = (): Promise<AxiosResponse<User>> => {
   return axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {

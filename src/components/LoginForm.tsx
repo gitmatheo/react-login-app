@@ -24,14 +24,14 @@ const LoginForm = (): ReactElement => {
     login(username, password)
       .then((response) => {
         if (response.status === 200) {
-          Cookies.set('user_token', response.data.token);
+          Cookies.set('user_token', response?.data.token);
           history.push('/dashboard');
         } else {
           alert('Failed!');
         }
       })
       .catch((error) => {
-        setErrorMessage(error.response.data);
+        setErrorMessage(error?.response?.data);
       });
   };
 
