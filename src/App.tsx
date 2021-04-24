@@ -27,6 +27,8 @@ function App() {
             <LoginForm />
           </Route>
 
+          <Route path="/dashboard">dashboard</Route>
+
           {/*extra task - 404 not found */}
           <Route path="/page-not-found">
             {/* <PageNotFound/> doesn't exist yet */}

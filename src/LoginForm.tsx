@@ -10,19 +10,21 @@ import {
   Row,
 } from 'reactstrap';
 import { login } from './api/apiService';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  let history = useHistory();
+
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     login(username, password)
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
-          alert('Success!');
+          history.push('/dashboard');
         } else {
           alert('Failed!');
         }
