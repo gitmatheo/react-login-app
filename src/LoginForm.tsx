@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { login } from './api/apiService';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -7,22 +8,7 @@ const LoginForm = () => {
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch('http://localhost:3333/login', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    }).then((response) => {
-      if (response.ok) {
-        alert('Success!');
-      } else {
-        alert('Failed!');
-      }
-    });
+    login(username, password);
   };
 
   return (
