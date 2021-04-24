@@ -1,18 +1,41 @@
 import React, { useState } from 'react';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import {
+  Alert,
+  Button,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+} from 'reactstrap';
 import { login } from './api/apiService';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(username, password);
+    login(username, password)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          alert('Success!');
+        } else {
+          alert('Failed!');
+        }
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data);
+      });
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
+    <Container className="d-flex flex-column justify-content-center align-items-center vh-100">
+      {errorMessage && <Alert color="danger"> {errorMessage}</Alert>}
+
       <Form onSubmit={submit}>
         <FormGroup>
           <Label for="username">Username</Label>

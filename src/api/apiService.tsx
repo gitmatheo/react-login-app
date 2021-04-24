@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 //   3  Replace fetch with axios library.
 //   Add /api directory and create a wrapper for axios requests.
@@ -7,20 +7,12 @@ import axios from 'axios';
 
 axios.defaults.headers['Authorization'] = `Bearer ???????token???????`;
 
-export const login = (username: string, password: string): void => {
-  axios
-    .post(`${process.env.REACT_APP_BASE_URL}/login`, {
-      username,
-      password,
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        alert('Success!');
-      } else {
-        alert('Failed!');
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+export const login = (
+  username: string,
+  password: string
+): Promise<AxiosResponse> => {
+  return axios.post(`${process.env.REACT_APP_BASE_URL}/login`, {
+    username,
+    password,
+  });
 };
