@@ -7,15 +7,16 @@ import {
   FormGroup,
   Input,
   Label,
-  Row,
 } from 'reactstrap';
 import { login } from './api/apiService';
 import { useHistory } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [cookies, setCookie, removeCookie] = useCookies(['user_token']);
 
   let history = useHistory();
 
@@ -25,6 +26,7 @@ const LoginForm = () => {
       .then((response) => {
         if (response.status === 200) {
           history.push('/dashboard');
+          setCookie('user_token', response.data.token);
         } else {
           alert('Failed!');
         }
