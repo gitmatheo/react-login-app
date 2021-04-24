@@ -4,7 +4,6 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import './App.css';
 import Dashboard from './components/Dashboard';
 import PageNotFound from './components/PageNotFound';
 import LoginForm from './components/LoginForm';

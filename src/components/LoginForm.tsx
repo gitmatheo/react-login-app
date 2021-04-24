@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import {
   Alert,
   Button,
@@ -8,33 +8,17 @@ import {
   Input,
   Label,
 } from 'reactstrap';
-import { login } from '../api/apiService';
-import { useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { useLogin } from '../hooks/useLogin';
 
 const LoginForm = (): ReactElement => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-
-  let history = useHistory();
-
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login(username, password)
-      .then((response) => {
-        if (response.status === 200) {
-          Cookies.set('user_token', response?.data.token);
-          history.push('/dashboard');
-        } else {
-          alert('Failed!');
-        }
-      })
-      .catch((error) => {
-        setErrorMessage(error?.response?.data);
-      });
-  };
-
+  const {
+    username,
+    password,
+    errorMessage,
+    submit,
+    setUsername,
+    setPassword,
+  } = useLogin();
   return (
     <Container className="d-flex flex-column justify-content-center align-items-center vh-100">
       {errorMessage && <Alert color="danger"> {errorMessage}</Alert>}
