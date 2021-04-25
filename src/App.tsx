@@ -10,7 +10,7 @@ import LoginForm from './components/LoginForm';
 import { PrivateRoute } from './components/PrivateRoute';
 import { UserContext } from './contexts/UserContext';
 import { useState } from 'react';
-import { User } from './models/User';
+import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);

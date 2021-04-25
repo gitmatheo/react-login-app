@@ -2,24 +2,19 @@ import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { login } from '../api/apiService';
+import { LoginDetails } from '../models/LoginDetails';
 
-interface useLoginProps {
-  username: string;
-  password: string;
+interface useLogin {
   errorMessage: string;
-  submit: (e: React.FormEvent<HTMLFormElement>) => void;
-  setUsername: (username: string) => void;
-  setPassword: (password: string) => void;
+  submit: (loginDetails: LoginDetails) => void;
 }
-export const useLogin = (): useLoginProps => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+export const useLogin = (): useLogin => {
   const [errorMessage, setErrorMessage] = useState('');
 
   let history = useHistory();
 
-  const submit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+  const submit = (loginDetails: LoginDetails): void => {
+    const { username, password } = loginDetails;
     login(username, password)
       .then((response) => {
         if (response.status === 200) {
@@ -33,11 +28,7 @@ export const useLogin = (): useLoginProps => {
   };
 
   return {
-    username,
-    password,
     errorMessage,
     submit,
-    setUsername,
-    setPassword,
   };
 };

@@ -1,0 +1,10 @@
+input.form-control,
+input.form-control:focus {
+  background: #e4eaef;
+}
+
+.error {
+  position: absolute;
+  color: red;
+  font-size: 0.6rem;
+}

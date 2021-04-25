@@ -1,55 +1,69 @@
 import React, { ReactElement } from 'react';
-import {
-  Alert,
-  Button,
-  Container,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-} from 'reactstrap';
+import { Alert, Container } from 'reactstrap';
 import { useLogin } from '../hooks/useLogin';
+import { Formik, Form } from 'formik';
+import { CustomField } from './CustomField';
+import * as Yup from 'yup';
+import { LoginDetails } from '../models/LoginDetails';
+import loginImg from '../assets/login.svg';
 
 const LoginForm = (): ReactElement => {
-  const {
-    username,
-    password,
-    errorMessage,
-    submit,
-    setUsername,
-    setPassword,
-  } = useLogin();
+  const { errorMessage, submit } = useLogin();
+
+  //Example validation provided by Yup library.
+  //I commented 'password' out just to check if 400 - "Wrong data" is picked up from mockApi and shown as 'errorMessage'.
+
+  const validate = Yup.object({
+    username: Yup.string()
+      .max(10, 'Username field must have 10 characters or less')
+      .required('This field is required'),
+    // password: Yup.string()
+    //   .min(6, 'Password field must have 6 characters or more')
+    //   .required('This field is required'),
+  });
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center vh-100">
-      {errorMessage && <Alert color="danger"> {errorMessage}</Alert>}
-
-      <Form onSubmit={submit}>
-        <FormGroup>
-          <Label for="username">Username</Label>
-          <Input
-            type="text"
-            name="username"
-            id="username"
-            value={username}
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="password">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormGroup>
-
-        <Button type="submit">Sign in</Button>
-      </Form>
-    </Container>
+    <div className="container mt-3">
+      <div className="row">
+        <div className="col-md-6">
+          <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+            {errorMessage && <Alert color="danger"> {errorMessage}</Alert>}
+            <Formik
+              initialValues={{
+                username: '',
+                password: '',
+              }}
+              validationSchema={validate}
+              validateOnMount
+              onSubmit={(values: LoginDetails) => submit(values)}
+            >
+              {(formik) => (
+                <div>
+                  <h1 className="my-4 font-weight-bold .display-4">Log In</h1>
+                  <Form>
+                    <CustomField label="Username" name="username" type="text" />
+                    <CustomField
+                      label="Password"
+                      name="password"
+                      type="password"
+                    />
+                    <button
+                      className="btn btn-success mt-3"
+                      type="submit"
+                      disabled={!formik.isValid}
+                    >
+                      Log in
+                    </button>
+                  </Form>
+                </div>
+              )}
+            </Formik>
+          </div>
+        </div>
+        <div className="col-md-6 my-auto d-none d-sm-block ">
+          <img className="img-fluid w-100" src={loginImg} alt="" />
+        </div>
+      </div>
+    </div>
   );
 };
 
