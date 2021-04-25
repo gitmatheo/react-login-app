@@ -5,7 +5,6 @@ import { getUser } from '../api/apiService';
 import { UserContext } from '../contexts/UserContext';
 
 const isLoggedIn = () => Cookies.get('user_token');
-
 interface PrivateRouteProps {
   component: any;
   path: string;
