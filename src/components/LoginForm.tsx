@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Alert, Container } from 'reactstrap';
+import { Alert } from 'reactstrap';
 import { useLogin } from '../hooks/useLogin';
 import { Formik, Form } from 'formik';
 import { CustomField } from './CustomField';
@@ -12,21 +12,22 @@ const LoginForm = (): ReactElement => {
 
   //Example validation provided by Yup library.
   //I commented 'password' out just to check if 400 - "Wrong data" is picked up from mockApi and shown as 'errorMessage'.
+  //(That was required in task 4)
 
   const validate = Yup.object({
     username: Yup.string()
-      .max(10, 'Username field must have 10 characters or less')
+      .max(10, 'Username should have 10 characters or less')
       .required('This field is required'),
     // password: Yup.string()
-    //   .min(6, 'Password field must have 6 characters or more')
+    //   .min(6, 'Password should be 6 characters or more')
     //   .required('This field is required'),
   });
+
   return (
     <div className="container mt-3">
       <div className="row">
         <div className="col-md-6">
           <div className="d-flex flex-column justify-content-center align-items-center vh-100">
-            {errorMessage && <Alert color="danger"> {errorMessage}</Alert>}
             <Formik
               initialValues={{
                 username: '',
@@ -46,6 +47,9 @@ const LoginForm = (): ReactElement => {
                       name="password"
                       type="password"
                     />
+                    {errorMessage && (
+                      <Alert color="danger"> {errorMessage}</Alert>
+                    )}
                     <button
                       className="btn btn-success mt-3"
                       type="submit"

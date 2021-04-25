@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { ErrorMessage, FieldHookConfig, useField } from 'formik';
+import { ErrorMessage, useField } from 'formik';
 
 interface CustomFieldProps {
   label: string;
@@ -21,6 +21,7 @@ export const CustomField = ({
         {...field}
         {...props}
         autoComplete="off"
+        id={field.name}
       />
       <ErrorMessage component="div" name={field.name} className="error" />
     </div>
