@@ -16,7 +16,7 @@ export const PrivateRoute = ({
   ...rest
 }: PrivateRouteProps): ReactElement => {
   const Component = component;
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   useEffect(() => {
     getUser().then((response) => {
       setUser(response.data);

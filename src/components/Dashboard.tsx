@@ -6,7 +6,7 @@ import { logout } from '../api/apiService';
 import welcomeImg from '../assets/welcome.svg';
 
 const Dashboard = (): ReactElement => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <>
